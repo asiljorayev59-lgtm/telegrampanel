@@ -1,0 +1,5 @@
+*.session
+backups/
+__pycache__/
+venv/
+*.zip

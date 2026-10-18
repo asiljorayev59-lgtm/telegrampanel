@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Desktop & Ultra-Light Panel</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --section-bg: #1e1e1e;
+            --text-color: #ffffff;
+            --hint-color: #888888;
+            --accent-color: #8774e1;
+            --btn-green: #2ecc71;
+            --btn-blue: #3498db;
+            --btn-red: #e74c3c;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        .window-switch-btn {
+            position: fixed;
+            top: 15px;
+            right: 20px;
+            background-color: var(--accent-color);
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            z-index: 1000;
+            transition: opacity 0.2s;
+        }
+        .window-switch-btn:hover { opacity: 0.85; }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .view-section {
+            display: none;
+        }
+        .view-section.active {
+            display: block;
+        }
+
+        .panel-header {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .ip-bar {
+            background-color: var(--section-bg);
+            border: 1px solid #333;
+            padding: 12px 16px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+        .ram-badge {
+            background-color: #16a085;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        .card {
+            background-color: var(--section-bg);
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .toggle-status-on { color: var(--btn-green); font-weight: bold; }
+        .toggle-status-off { color: var(--btn-red); font-weight: bold; }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            color: var(--hint-color);
+            margin-bottom: 5px;
+        }
+        .text-input {
+            width: 100%;
+            padding: 10px 12px;
+            background-color: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 6px;
+            color: #fff;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        .text-input:focus {
+            border-color: var(--accent-color);
+            outline: none;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            color: #fff;
+            margin-top: 5px;
+        }
+        .btn-green { background-color: var(--btn-green); }
+        .btn-blue { background-color: var(--btn-blue); }
+        .btn-red { background-color: var(--btn-red); }
+        .btn:hover { opacity: 0.9; }
+    </style>
+</head>
+<body>
+
+    <!-- Oynalararo o'tish tugmasi (Tepada) -->
+    <button class="window-switch-btn" onclick="toggleWindow()" id="switchBtnText">2-Oynaga o'tish</button>
+
+    <div class="container">
+
+        <!---------------- 1-OYNA: ASOSIY PANEL ---------------->
+        <div id="windowOne" class="view-section active">
+            <div class="panel-header">Telegram Desktop & Ultra-Light Panel (35 ta Akkaunt)</div>
+            
+            <div class="ip-bar">
+                <span>🌐 Tashqi IP: 2a05:45c2:70ef:2ae3:8047:6cc1:6d75 | 💻 Lokal IP: 192.168.100.86</span>
+                <span class="ram-badge">Panel RAM: 86.11 MB</span>
+            </div>
+
+            <!-- Noutbuk Resurslari -->
+            <div class="card">
+                <div class="card-title">
+                    <span>💻 Noutbuk Resurslari & RAM Nazorati</span>
+                    <span class="toggle-status-on">ON</span>
+                </div>
+                <div style="display: flex; gap: 15px; text-align: center;">
+                    <div style="flex:1; background:#252525; padding:15px; border-radius:8px;">
+                        <div style="color:var(--hint-color); font-size:12px;">CPU</div>
+                        <div style="font-size:20px; font-weight:bold; color:var(--btn-green);">11.1%</div>
+                    </div>
+                    <div style="flex:1; background:#252525; padding:15px; border-radius:8px;">
+                        <div style="color:var(--hint-color); font-size:12px;">RAM</div>
+                        <div style="font-size:20px; font-weight:bold; color:#e67e22;">85%</div>
+                    </div>
+                    <div style="flex:1; background:#252525; padding:15px; border-radius:8px;">
+                        <div style="color:var(--hint-color); font-size:12px;">DISK</div>
+                        <div style="font-size:20px; font-weight:bold; color:#e74c3c;">92% (Bo'sh: 6.61 GB)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Guruhga Yangi Raqam Qo'shish -->
+            <div class="card">
+                <div class="card-title">
+                    <span>➕ Guruhga Yangi Raqam Qo'shish (Alohida Oyna)</span>
+                    <span class="toggle-status-on">ON</span>
+                </div>
+                <p style="font-size: 13px; color: var(--hint-color); margin-bottom: 12px;">
+                    Yangi raqam qo'shish va referral ssilka orqali ishlash uchun maxsus oynaga o'ting.
+                </p>
+                <button class="btn" style="background-color: var(--accent-color);" onclick="toggleWindow()">🚀 2-Oynani Ochish (Alohida Modul)</button>
+            </div>
+
+            <!-- Barcha Ulangan Akkauntlar -->
+            <div class="card">
+                <div class="card-title">
+                    <span>📁 Barcha Ulangan Akkauntlar & Guruhlar (35 ta Akkaunt)</span>
+                    <span class="toggle-status-off">OFF</span>
+                </div>
+                <p style="font-size: 13px; color: var(--hint-color); margin: 0;">Hozircha ulangan akkauntlar ro'yxati yashiringan.</p>
+            </div>
+
+            <!-- Zadaniya Bajarish -->
+            <div class="card">
+                <div class="card-title">
+                    <span>🚀 Zadaniya Bajarish & Spandan Qochish Rejimlari</span>
+                    <span class="toggle-status-off">OFF</span>
+                </div>
+                <p style="font-size: 13px; color: var(--hint-color); margin: 0;">Avtomatlashtirilgan rejimlar o'chirilgan.</p>
+            </div>
+
+            <!-- Zadaniyalar Tarixi -->
+            <div class="card">
+                <div class="card-title">
+                    <span>📋 Zadaniyalar Tarixi (Istoriya)</span>
+                    <button class="btn-red" style="padding: 4px 10px; font-size: 12px; border-radius: 4px; border:none; cursor:pointer;">Tarixni Tozalash</button>
+                </div>
+                <div style="text-align: center; color: var(--hint-color); font-size: 13px; padding: 10px 0;">
+                    Hozircha bajarilgan zadaniyalar tarixi yo'q.
+                </div>
+            </div>
+        </div>
+
+
+        <!---------------- 2-OYNA: YANGI AKKAUNT & REFERRAL ---------------->
+        <div id="windowTwo" class="view-section">
+            <div class="panel-header">➕ 2-Oyna: Yangi Akkaunt Qo'shish & Referral</div>
+            
+            <div class="card">
+                <div class="card-title">🔗 Shaxsiy Taklif (Referral) Ssilkangiz:</div>
+                <div style="background: #252525; padding: 10px; border-radius: 6px; font-family: monospace; color: var(--accent-color); margin-bottom: 10px; word-break: break-all;">
+                    http://192.168.100.86:8001/?ref=partner_123
+                </div>
+                <div style="font-size: 12px; color: var(--hint-color);">Jami o'tishlar: 0 ta</div>
+            </div>
+
+            <div class="card">
+                <div style="font-size: 13px; color: var(--hint-color); margin-bottom: 10px;">
+                    Telegram raqamingizni kiriting va kodni tasdiqlang:
+                </div>
+                <div class="input-group">
+                    <label>Telefon raqam (masalan: +998901234567):</label>
+                    <input type="text" class="text-input" placeholder="+998901234567">
+                </div>
+                <button class="btn btn-green">📱 Kodni Yuborish</button>
+                <button class="btn btn-blue" style="margin-top: 10px;" onclick="toggleWindow()">⬅️ Bosh Panelga Qaytish</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleWindow() {
+            const win1 = document.getElementById('windowOne');
+            const win2 = document.getElementById('windowTwo');
+            const btnText = document.getElementById('switchBtnText');
+
+            if (win1.classList.contains('active')) {
+                win1.classList.remove('active');
+                win2.classList.add('active');
+                btnText.textContent = "Bosh Panelga O'tish";
+            } else {
+                win2.classList.remove('active');
+                win1.classList.add('active');
+                btnText.textContent = "2-Oynaga O'tish";
+            }
+        }
+    </script>
+</body>
+</html>
